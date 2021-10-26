@@ -10,7 +10,7 @@ import { UserService } from './user.service'
 import { User, UserDocument } from './schemas/user.schema'
 
 // @ts-ignore: этого хватит
-const mockUser = (id = 1, platform = 0): UserDocument => ({
+const mockUser = ({ id = 1, platform = 0 } = {}): UserDocument => ({
   id,
   platform,
 
@@ -31,7 +31,7 @@ describe('UserService', () => {
           provide: getModelToken(User.name),
           useValue: {
             findOne: jest.fn(),
-            create: jest.fn().mockResolvedValue(mockUser()),
+            create: jest.fn().mockImplementation(mockUser),
           },
         },
         {

@@ -32,13 +32,11 @@ export class EntriesService {
       if (!isValid) throw new BadRequestException()
     }
 
-    const entry = new this.entryModel({
+    return await this.entryModel.create({
       ...data,
       owner: user._id,
       _id: undefined,
     })
-    await entry.save()
-    return entry
   }
 
   async deleteEntry(user: UserDocument, id: string) {

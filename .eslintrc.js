@@ -14,7 +14,6 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    jest: true,
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
@@ -26,4 +25,16 @@ module.exports = {
 
     'import/order': 'error',
   },
+  overrides: [
+    {
+      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
+      files: ['*.spec.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+      env: {
+        jest: true,
+      },
+    },
+  ],
 }

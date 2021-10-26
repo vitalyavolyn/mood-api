@@ -26,4 +26,12 @@ module.exports = {
 
     'import/order': 'error',
   },
+  overrides: [
+    {
+      files: ['*.spec.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+    },
+  ],
 }

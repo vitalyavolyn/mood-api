@@ -13,11 +13,11 @@ export class ActivitiesService {
   ) {}
 
   async createActivity(user: UserDocument, data: CreateUpdateActivityDto) {
-    const activity = new this.activityModel()
-    activity.text = data.name
-    activity.icon = data.icon
-    activity.owner = user
-    return activity.save()
+    return await this.activityModel.create({
+      text: data.name,
+      icon: data.icon,
+      owner: user,
+    })
   }
 
   /**

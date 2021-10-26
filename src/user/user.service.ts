@@ -24,6 +24,7 @@ export class UserService {
 
   /**
    * Находит пользователя по id и платформе
+   *
    * При отсуствии пользователя в базе создает нового
    */
   async findOneOrCreate(id: number, platform: Platform): Promise<UserDocument> {
@@ -37,8 +38,7 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDocument> {
-    const user = new this.userModel(createUserDto)
-    await user.save()
+    const user = await this.userModel.create(createUserDto)
     await this.activitiesService.createDefaultActivities(user)
     return user.populate('entries activities')
   }

@@ -75,9 +75,9 @@ describe('UserService', () => {
 
       const newUser = await service.findOneOrCreate(data.id, data.platform)
 
-      expect(findSpy).toBeCalled()
+      expect(findSpy).toHaveBeenCalled()
       expect(newUser).toMatchObject(data)
-      expect(activityInsertSpy).toBeCalled()
+      expect(activityInsertSpy).toHaveBeenCalled()
     })
 
     it('should return existing user', async () => {
@@ -95,7 +95,7 @@ describe('UserService', () => {
         mockData.platform,
       )
 
-      expect(createSpy).not.toBeCalled()
+      expect(createSpy).not.toHaveBeenCalled()
       expect(found).toMatchObject(mockData)
     })
   })

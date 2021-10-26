@@ -55,9 +55,11 @@ describe('ActivitiesService', () => {
     // @ts-ignore (достаточно для проверки правильности)
     jest.spyOn(mockActivityModel, 'findOne').mockResolvedValueOnce(activity)
 
-    service
-      // @ts-ignore
-      .getUserActivity({ _id: '1' }, '')
-      .then((received) => expect(received).toMatchObject(activity))
+    return (
+      service
+        // @ts-ignore
+        .getUserActivity({ _id: '1' }, '')
+        .then((received) => expect(received).toMatchObject(activity))
+    )
   })
 })

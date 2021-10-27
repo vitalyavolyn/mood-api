@@ -30,11 +30,7 @@ function validateRequest(request: IncomingMessage) {
   const hash = crypto
     .createHmac('sha256', secretKey)
     .update(searchParams.toString())
-    .digest()
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=$/, '')
+    .digest('base64url')
 
   return hash === sign
 }

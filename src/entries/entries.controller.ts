@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
-import { User } from '../user/user.decorator'
+import { InjectUser } from '../user/user.decorator'
 import { UserDocument } from '../user/schemas/user.schema'
 import { CreateEntryDto } from './dto/create-entry.dto'
 import { UpdateDeleteEntryDto } from './dto/update-delete-entry.dto'
@@ -20,7 +20,7 @@ export class EntriesController {
 
   @Post()
   async createEntry(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Body() createEntryDto: CreateEntryDto,
   ) {
     return this.entriesService.addEntry(user, createEntryDto)
@@ -29,7 +29,7 @@ export class EntriesController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteEntry(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: UpdateDeleteEntryDto,
   ) {
     return this.entriesService.deleteEntry(user, params.id)
@@ -38,7 +38,7 @@ export class EntriesController {
   // TODO: по логике должно быть Get? но работать с json приятнее...
   @Post('/search')
   async searchEntries(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Body() searchParams: SearchEntriesDto,
   ) {
     return this.entriesService.searchEntries(user, searchParams)
@@ -46,7 +46,7 @@ export class EntriesController {
 
   @Post('/:id')
   async updateEntry(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: UpdateDeleteEntryDto,
     @Body() data: CreateEntryDto,
   ) {

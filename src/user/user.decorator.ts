@@ -16,5 +16,5 @@ export const GetUserSearchFilters = createParamDecorator(
   },
 )
 
-export const User = (additionalOptions?: any) =>
+export const InjectUser = (additionalOptions?: any) =>
   GetUserSearchFilters(additionalOptions, FindUserPipe)

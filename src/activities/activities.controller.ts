@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common'
-import { User } from '../user/user.decorator'
+import { InjectUser } from '../user/user.decorator'
 import { UserDocument } from '../user/schemas/user.schema'
 import { ActivityIdParamDto } from './dto/activity-id-param.dto'
 import { ActivitiesService } from './activities.service'
@@ -19,7 +19,7 @@ export class ActivitiesController {
 
   @Post()
   async createActivity(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Body() data: CreateUpdateActivityDto,
   ) {
     return this.activitiesService.createActivity(user, data)
@@ -28,7 +28,7 @@ export class ActivitiesController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteActivity(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: ActivityIdParamDto,
   ) {
     return this.activitiesService.deleteActivity(user, params.id)
@@ -36,7 +36,7 @@ export class ActivitiesController {
 
   @Post('/:id')
   async updateActivity(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: ActivityIdParamDto,
     @Body() data: CreateUpdateActivityDto,
   ) {
@@ -45,7 +45,7 @@ export class ActivitiesController {
 
   @Post('/:id/archive')
   async archiveActivity(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: ActivityIdParamDto,
   ) {
     return this.activitiesService.setArchivedStatus(user, params.id, true)
@@ -53,7 +53,7 @@ export class ActivitiesController {
 
   @Post('/:id/unarchive')
   async unarchiveActivity(
-    @User() user: UserDocument,
+    @InjectUser() user: UserDocument,
     @Param() params: ActivityIdParamDto,
   ) {
     return this.activitiesService.setArchivedStatus(user, params.id, false)

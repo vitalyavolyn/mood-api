@@ -73,9 +73,15 @@ export class ActivitiesService {
     id: string,
     data: CreateUpdateActivityDto,
   ) {
-    const activity = await this.getUserActivity(user, id)
-    activity.text = data.name
-    activity.icon = data.icon
-    return activity.save()
+    const activity = await this.activityModel.findOneAndUpdate(
+      {
+        _id: id,
+        owner: user,
+      },
+      { text: data.name, icon: data.icon },
+      { runValidators: true, returnDocument: 'after' },
+    )
+
+    return activity
   }
 }

@@ -9,17 +9,17 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
+import { ConfigService } from '@nestjs/config'
 
 export const Public = () => SetMetadata('isPublic', true)
 
-function validateRequest(request: IncomingMessage) {
+function validateRequest(request: IncomingMessage, secretKey: string) {
   const params = request.headers['x-vk-params'] as string
 
   const searchParams = new URLSearchParams(params)
   searchParams.sort()
 
   const sign = searchParams.get('sign')
-  const secretKey = process.env.APP_SECRET_KEY
 
   for (const key of searchParams.keys()) {
     if (!key.startsWith('vk_')) {
@@ -44,7 +44,10 @@ function validateRequest(request: IncomingMessage) {
  */
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    private configService: ConfigService,
+  ) {}
 
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<IncomingMessage>()
@@ -53,7 +56,9 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ])
 
-    const allow = isPublic || validateRequest(request)
+    const allow =
+      isPublic ||
+      validateRequest(request, this.configService.get('APP_SECRET_KEY'))
 
     if (!allow) {
       throw new UnauthorizedException()

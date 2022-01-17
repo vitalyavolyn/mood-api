@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { APP_GUARD } from '@nestjs/core'
+import { VkModule } from 'nestjs-vk'
 import { HealthController } from './health/health.controller'
 import { UserModule } from './user/user.module'
 import { AuthGuard } from './auth/auth.guard'
@@ -14,6 +15,13 @@ import { ActivitiesModule } from './activities/activities.module'
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DB_CONNECTION_URI),
+    VkModule.forRoot({
+      token: process.env.VK_SERVICE_TOKEN,
+      options: {
+        apiMode: 'parallel',
+      },
+      launchOptions: false,
+    }),
     UserModule,
     EntriesModule,
     ThemesModule,

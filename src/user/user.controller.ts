@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common'
 import { UserService } from './user.service'
 import { InjectUser } from './user.decorator'
-import { UserDocument } from './schemas/user.schema'
+import { Platform, UserDocument } from './schemas/user.schema'
 import { UpdateSettingsDto } from './dto/update-settings.dto'
 
 @Controller('user')
@@ -10,7 +10,13 @@ export class UserController {
 
   @Get()
   async getCurrentUser(@InjectUser() user: UserDocument) {
-    return user
+    return {
+      ...user.toObject(),
+      isSubscribed:
+        user.platform === Platform.OK
+          ? false // не могу найти в документации ОК что-то похожее на groups.isMember
+          : await this.userService.isVkUserSubscribed(user),
+    }
   }
 
   @Post('/settings')

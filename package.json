@@ -30,9 +30,11 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "mongoose": "^6.0.11",
+    "nestjs-vk": "^4.4.0-rc.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "vk-io": "^4.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

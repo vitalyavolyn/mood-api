@@ -21,7 +21,7 @@ function validateRequest(request: IncomingMessage, secretKey: string) {
 
   const sign = searchParams.get('sign')
 
-  for (const key of searchParams.keys()) {
+  for (const key of [...searchParams.keys()]) {
     if (!key.startsWith('vk_')) {
       searchParams.delete(key)
     }

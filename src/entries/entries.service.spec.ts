@@ -1,5 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getModelToken } from '@nestjs/mongoose'
+import { VkModule } from 'nestjs-vk'
+import { ConfigModule } from '@nestjs/config'
 import { ActivitiesService } from '../activities/activities.service'
 import { Activity } from '../activities/schemas/activity.schema'
 import { EntriesService } from './entries.service'
@@ -10,6 +12,13 @@ describe('EntriesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        VkModule.forRoot({
+          token: '',
+          launchOptions: false,
+        }),
+        ConfigModule.forRoot(),
+      ],
       providers: [
         {
           provide: getModelToken(Entry.name),
